@@ -25,11 +25,13 @@ input {
   color: var(--text-primary);
   transition: all 0.3s ease;
 }
+
 input:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
 }
+
 button {
   background-color: transparent;
   border: transparent;
@@ -61,6 +63,7 @@ h1, h2, h3, h4 {
   font-family: 'Space Grotesk', sans-serif;
   letter-spacing: -0.02em;
 }
+
 .container {
   max-width: 600px;
   width: 100%;
@@ -154,7 +157,7 @@ h1, h2, h3, h4 {
   margin-bottom: 0.75rem;
 }
 
-.modal-body li, .modal-body p, .setting-item label, .btn-icon, .status, .stat-label, .task-item .task-actions button {
+.modal-body li, .modal-body p, .setting-item label, .btn-icon, .status, .stat-label, .task-item .task-actions button, .complete-btn, .delete-btn {
   color: var(--text-secondary);
 }
 
@@ -251,6 +254,7 @@ h1, h2, h3, h4 {
   opacity: 0;
   animation: fadeInUp 0.6s ease 0.4s forwards;
 }
+
 .stat-card {
   flex: 1;
   background: var(--card-bg);
@@ -260,61 +264,77 @@ h1, h2, h3, h4 {
   border: 1px solid var(--border);
   transition: all 0.3s ease;
 }
+
 .stat-value {
   font-size: 1.5rem;
   font-weight: 600;
   color: var(--accent);
   margin-bottom: 0.5rem;
 }
+
 .stat-label {
   font-size: 0.9rem;
 }
+
 .task-section {
   opacity: 0;
   animation: fadeInUp 0.6s ease 0.6s forwards;
 }
+
 .task-input {
   background: var(--card-bg);
   border-radius: 10px;
   padding: 1.5rem;
   border: 1px solid var(--border);
 }
+
 .task-input form {
   display: flex;
   gap: 1rem;
 }
+
 .input-group {
   flex: 1;
 }
+
 .task-container {
   background: var(--card-bg);
   border-radius: 10px;
   padding: 1.5rem;
   margin-top: 2rem;
 }
+
 .task-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1rem;
 }
+
 .current-task {
   background: var(--card-bg);
   padding: 0.5rem;
   border-radius: 10px;
   border: 1px solid var(--border);
 }
+
 .current-task-content {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
+
 .task-name {
   flex: 1;
   padding: 0.5rem 0;
 }
+
 .task-name:hover {
   background: var(--border);
+}
+
+.task-name[contenteditable="true"] {
+  outline: none;
 }
 
 .task-item {
@@ -323,9 +343,26 @@ h1, h2, h3, h4 {
   align-items: center;
   border-bottom: 1px solid var(--card-bg);
 }
+
+.notification {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  padding: 0.45rem 0.75rem;
+  font-size: 14px;
+  background: var(--accent);
+  color: var(--primary-bg);
+  border-radius: 4px;
+  transform: translateX(200%);
+  transition: transform 0.3s ease;
+}
+.notification.show {
+  transform: translateX(0);
+}
 .timer-display.running {
   animation: pulse 2s infinite;
 }
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -345,12 +382,15 @@ h1, h2, h3, h4 {
   .timer-display {
     font-size: 4rem;
   }
+
   .stats-container {
     flex-direction: column;
   }
+
   .task-input form {
     flex-direction: column;
   }
+
   .controls {
     flex-wrap: wrap;
   }
