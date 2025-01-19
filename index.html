@@ -99,6 +99,7 @@
           <button class="btn" id="breakBtn">Take Break</button>
         </div>
       </div>
+
       <div class="stats-container">
         <div class="stat-card">
           <div class="stat-value">100</div>
@@ -109,6 +110,7 @@
           <div class="stat-label">Tasks Completed</div>
         </div>
       </div>
+
       <div class="task-section">
         <div class="task-input">
           <form id="taskForm">
@@ -123,12 +125,18 @@
             <button type="submit" class="btn primary">Add Task</button>
           </form>
         </div>
+
         <div class="task-container">
           <div class="task-header">
             <h3>Current Task</h3>
+            <button id="toggleQueue" class="queue-toggle">Show Queue</button>
           </div>
           <div id="currentTask" class="current-task">
             <p id="currentTaskText">No task</p>
+          </div>
+          <div id="taskQueue" class="task-queue">
+            <h4>Upcoming Tasks</h4>
+            <ul id="taskList" class="task-list"></ul>
           </div>
         </div>
       </div>
