@@ -56,6 +56,7 @@
           </div>
         </div>
       </div>
+
       <div class="modal" id="settingsModal">
         <div class="modal-overlay"></div>
         <div class="modal-content">
@@ -88,6 +89,7 @@
           <button class="btn primary" id="saveSettings">Save Changes</button>
         </div>
       </div>
+
       <div class="timer-card">
         <div class="timer-display">25:00</div>
         <div class="status">Time to focus</div>
@@ -97,7 +99,41 @@
           <button class="btn" id="breakBtn">Take Break</button>
         </div>
       </div>
+      <div class="stats-container">
+        <div class="stat-card">
+          <div class="stat-value">100</div>
+          <div class="stat-label">Focus Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">0</div>
+          <div class="stat-label">Tasks Completed</div>
+        </div>
+      </div>
+      <div class="task-section">
+        <div class="task-input">
+          <form id="taskForm">
+            <div class="input-group">
+              <input
+                type="text"
+                id="taskName"
+                placeholder="What are you working on?"
+                required
+              />
+            </div>
+            <button type="submit" class="btn primary">Add Task</button>
+          </form>
+        </div>
+        <div class="task-container">
+          <div class="task-header">
+            <h3>Current Task</h3>
+          </div>
+          <div id="currentTask" class="current-task">
+            <p id="currentTaskText">No task</p>
+          </div>
+        </div>
+      </div>
     </div>
+
     <div class="notification" id="notification"></div>
     <script src="script.js"></script>
   </body>

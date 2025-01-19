@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&display=swap");
+
 :root {
   --primary-bg: #171c2f;
   --card-bg: rgba(255, 255, 255, 0.03);
@@ -7,17 +8,34 @@
   --text-secondary: #94a3b8;
   --border: rgba(255, 255, 255, 0.05);
 }
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: "Sora", sans-serif;
 }
+
+input {
+  width: 100%;
+  padding: 0.8rem;
+  background: var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+input:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(100, 255, 218, 0.1);
+}
 button {
   background-color: transparent;
   border: transparent;
   cursor: pointer;
 }
+
 body {
   min-height: 100vh;
   background: var(--primary-bg);
@@ -38,15 +56,22 @@ body {
       transparent 20%
     );
 }
+
+h1, h2, h3, h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: -0.02em;
+}
 .container {
   max-width: 600px;
   width: 100%;
   margin: 0 auto;
 }
+
 .header {
   text-align: center;
   margin-bottom: 3rem;
 }
+
 .logo {
   font-size: 1.5rem;
   font-weight: 500;
@@ -55,10 +80,111 @@ body {
   opacity: 0;
   animation: fadeInUp 0.6s ease forwards;
 }
+
+.btn-icon {
+  padding: 0.5rem;
+  font-size: 1.25rem;
+}
+
+.btn-icon:hover {
+  color: var(--text-primary);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: none;
+  place-items: center;
+  z-index: 1000;
+}
+
+.modal.show {
+  display: grid;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(8px);
+}
+
+.modal-content {
+  position: relative;
+  background: var(--primary-bg);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 500px;
+  margin: 2rem auto;
+  border: 1px solid var(--border);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-header h2 {
+  font-size: 1.75rem;
+  font-weight: 500;
+  background: linear-gradient(135deg, #fff, var(--text-secondary));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.modal-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.modal-body h3 {
+  font-size: 1.25rem;
+  margin: 1rem 0;
+}
+
+.modal-body ol,
+.modal-body ul {
+  padding-left: 1.5rem;
+}
+
+.modal-body li {
+  margin-bottom: 0.75rem;
+}
+
+.modal-body li, .modal-body p, .setting-item label, .btn-icon, .status, .stat-label, .task-item .task-actions button {
+  color: var(--text-secondary);
+}
+
+.setting-item {
+  margin-bottom: 1.5rem;
+}
+
+.setting-item label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.setting-item input {
+  width: 100%;
+  background: var(--border);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+  border-radius: 8px;
+  color: var(--text-primary);
+}
+
+#saveSettings {
+  width: 100%;
+}
+
 .btn.primary {
   background: var(--accent);
   color: var(--primary-bg);
 }
+
 .btn {
   padding: 0.8rem 1.5rem;
   border-radius: 8px;
@@ -68,6 +194,7 @@ body {
   position: relative;
   overflow: hidden;
 }
+
 .btn::after {
   content: "";
   position: absolute;
@@ -80,10 +207,12 @@ body {
   transform: translate(-50%, -50%);
   transition: width 0.6s ease, height 0.6s ease;
 }
+
 .btn:hover::after {
   width: 300px;
   height: 300px;
 }
+
 .timer-card {
   background: var(--card-bg);
   backdrop-filter: blur(10px);
@@ -96,20 +225,106 @@ body {
   opacity: 0;
   animation: fadeInUp 0.6s ease 0.2s forwards;
 }
+
 .timer-display {
   font-size: 6rem;
   font-weight: 300;
   color: var(--accent);
 }
+
 .status {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
+
 .controls {
   display: flex;
   gap: 1rem;
   justify-content: center;
   margin-bottom: 2rem;
+}
+
+.stats-container {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0;
+  animation: fadeInUp 0.6s ease 0.4s forwards;
+}
+.stat-card {
+  flex: 1;
+  background: var(--card-bg);
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+.stat-label {
+  font-size: 0.9rem;
+}
+.task-section {
+  opacity: 0;
+  animation: fadeInUp 0.6s ease 0.6s forwards;
+}
+.task-input {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  border: 1px solid var(--border);
+}
+.task-input form {
+  display: flex;
+  gap: 1rem;
+}
+.input-group {
+  flex: 1;
+}
+.task-container {
+  background: var(--card-bg);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+.task-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+.current-task {
+  background: var(--card-bg);
+  padding: 0.5rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+}
+.current-task-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.task-name {
+  flex: 1;
+  padding: 0.5rem 0;
+}
+.task-name:hover {
+  background: var(--border);
+}
+
+.task-item {
+  padding: 0.5rem 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--card-bg);
+}
+.timer-display.running {
+  animation: pulse 2s infinite;
 }
 @keyframes fadeInUp {
   from {
@@ -119,5 +334,24 @@ body {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  .timer-display {
+    font-size: 4rem;
+  }
+  .stats-container {
+    flex-direction: column;
+  }
+  .task-input form {
+    flex-direction: column;
+  }
+  .controls {
+    flex-wrap: wrap;
   }
 }
