@@ -157,7 +157,7 @@ h1, h2, h3, h4 {
   margin-bottom: 0.75rem;
 }
 
-.modal-body li, .modal-body p, .setting-item label, .btn-icon, .status, .stat-label, .task-item .task-actions button, .complete-btn, .delete-btn {
+.modal-body li, .modal-body p, .setting-item label, .btn-icon, .status, .stat-label, .task-item .task-actions button, .queu-toggle:hover, .complete-btn, .delete-btn {
   color: var(--text-secondary);
 }
 
@@ -311,6 +311,13 @@ h1, h2, h3, h4 {
   margin-bottom: 1rem;
 }
 
+.queue-toggle {
+  background: none;
+  border: none;
+  color: #666;
+  font-size: 12px;
+}
+
 .current-task {
   background: var(--card-bg);
   padding: 0.5rem;
@@ -324,6 +331,15 @@ h1, h2, h3, h4 {
   gap: 1rem;
 }
 
+.task-queue {
+  margin-top: 1rem;
+  display: none;
+}
+
+.task-queue.show {
+  display: block;
+}
+
 .task-name {
   flex: 1;
   padding: 0.5rem 0;
@@ -335,6 +351,14 @@ h1, h2, h3, h4 {
 
 .task-name[contenteditable="true"] {
   outline: none;
+}
+
+.task-list {
+  margin-top: 1rem;
+}
+
+.task-list.hidden {
+  display: none;
 }
 
 .task-item {
@@ -356,9 +380,11 @@ h1, h2, h3, h4 {
   transform: translateX(200%);
   transition: transform 0.3s ease;
 }
+
 .notification.show {
   transform: translateX(0);
 }
+
 .timer-display.running {
   animation: pulse 2s infinite;
 }
