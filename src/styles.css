@@ -46,7 +46,8 @@ body {
   flex-direction: column;
   align-items: center;
   padding: 2rem;
-  line-height: 1.6;
+  line-height: 1.4;
+  font-size: 1rem;
   background-image: radial-gradient(
       circle at 10% 20%,
       rgba(100, 255, 218, 0.03) 0%,
@@ -72,7 +73,7 @@ h1, h2, h3, h4 {
 
 .header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 }
 
 .logo {
@@ -189,7 +190,7 @@ h1, h2, h3, h4 {
 }
 
 .btn {
-  padding: 0.8rem 1.5rem;
+  padding: 0.75rem 1.125rem;
   border-radius: 8px;
   font-weight: 500;
   background: var(--border);
@@ -220,7 +221,7 @@ h1, h2, h3, h4 {
   background: var(--card-bg);
   backdrop-filter: blur(10px);
   border-radius: 12px;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--border);
@@ -230,13 +231,12 @@ h1, h2, h3, h4 {
 }
 
 .timer-display {
-  font-size: 6rem;
+  font-size: 4rem;
   font-weight: 300;
   color: var(--accent);
 }
 
 .status {
-  font-size: 1.1rem;
   margin-bottom: 1.5rem;
 }
 
@@ -258,7 +258,7 @@ h1, h2, h3, h4 {
 .stat-card {
   flex: 1;
   background: var(--card-bg);
-  padding: 1.5rem;
+  padding: 1rem;
   border-radius: 10px;
   text-align: center;
   border: 1px solid var(--border);
@@ -266,14 +266,14 @@ h1, h2, h3, h4 {
 }
 
 .stat-value {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   font-weight: 600;
   color: var(--accent);
   margin-bottom: 0.5rem;
 }
 
 .stat-label {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
 }
 
 .task-section {
@@ -295,6 +295,18 @@ h1, h2, h3, h4 {
 
 .input-group {
   flex: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .task-container {
@@ -371,7 +383,7 @@ h1, h2, h3, h4 {
 .notification {
   position: fixed;
   top: 2rem;
-  right: 2rem;
+  right: 0;
   padding: 0.45rem 0.75rem;
   font-size: 14px;
   background: var(--accent);
@@ -403,10 +415,6 @@ h1, h2, h3, h4 {
 @media (max-width: 768px) {
   body {
     padding: 1rem;
-  }
-
-  .timer-display {
-    font-size: 4rem;
   }
 
   .stats-container {

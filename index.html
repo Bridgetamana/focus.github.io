@@ -4,33 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Focus</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="src/styles.css" />
   </head>
   <body>
     <div class="container">
       <header class="header">
         <div class="logo">Focus</div>
         <div class="header-controls">
-          <button class="btn-icon" id="helpBtn" title="Help">
-            <i class="fas fa-question-circle"></i>
+          <button class="btn-icon" id="helpBtn" title="Help" aria-label="Help">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path fill-rule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12Zm8.706-1.442c1.146-.573 2.437.463 2.126 1.706l-.709 2.836.042-.02a.75.75 0 0 1 .67 1.34l-.04.022c-1.147.573-2.438-.463-2.127-1.706l.71-2.836-.042.02a.75.75 0 1 1-.671-1.34l.041-.022ZM12 9a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" clip-rule="evenodd" />
+            </svg>
           </button>
-          <button class="btn-icon" id="settingsBtn" title="Settings">
-            <i class="fas fa-cog"></i>
+          <button class="btn-icon" id="settingsBtn" title="Settings" aria-label="Settings">  
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+              <path fill-rule="evenodd" d="M11.078 2.25c-.917 0-1.699.663-1.85 1.567L9.05 4.889c-.02.12-.115.26-.297.348a7.493 7.493 0 0 0-.986.57c-.166.115-.334.126-.45.083L6.3 5.508a1.875 1.875 0 0 0-2.282.819l-.922 1.597a1.875 1.875 0 0 0 .432 2.385l.84.692c.095.078.17.229.154.43a7.598 7.598 0 0 0 0 1.139c.015.2-.059.352-.153.43l-.841.692a1.875 1.875 0 0 0-.432 2.385l.922 1.597a1.875 1.875 0 0 0 2.282.818l1.019-.382c.115-.043.283-.031.45.082.312.214.641.405.985.57.182.088.277.228.297.35l.178 1.071c.151.904.933 1.567 1.85 1.567h1.844c.916 0 1.699-.663 1.85-1.567l.178-1.072c.02-.12.114-.26.297-.349.344-.165.673-.356.985-.57.167-.114.335-.125.45-.082l1.02.382a1.875 1.875 0 0 0 2.28-.819l.923-1.597a1.875 1.875 0 0 0-.432-2.385l-.84-.692c-.095-.078-.17-.229-.154-.43a7.614 7.614 0 0 0 0-1.139c-.016-.2.059-.352.153-.43l.84-.692c.708-.582.891-1.59.433-2.385l-.922-1.597a1.875 1.875 0 0 0-2.282-.818l-1.02.382c-.114.043-.282.031-.449-.083a7.49 7.49 0 0 0-.985-.57c-.183-.087-.277-.227-.297-.348l-.179-1.072a1.875 1.875 0 0 0-1.85-1.567h-1.843ZM12 15.75a3.75 3.75 0 1 0 0-7.5 3.75 3.75 0 0 0 0 7.5Z" clip-rule="evenodd" />
+            </svg>          
           </button>
         </div>
       </header>
 
-      <div class="modal" id="helpModal">
+      <div class="modal" id="helpModal" role="dialog" aria-labelledby="helpModalTitle" aria-hidden="true">
         <div class="modal-overlay"></div>
         <div class="modal-content">
           <div class="modal-header">
-            <h2>How to Use Focus</h2>
-            <button class="btn-icon" id="closeHelp">
-              <i class="fas fa-times"></i>
+            <h2 id="helpModalTitle">How to Use Focus</h2>
+            <button class="btn-icon" id="closeHelp" aria-label="Close Help">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
             </button>
           </div>
           <div class="modal-body">
@@ -57,17 +59,19 @@
         </div>
       </div>
 
-      <div class="modal" id="settingsModal">
+      <div class="modal" id="settingsModal" role="dialog" aria-labelledby="settingsModalTitle" aria-hidden="true">
         <div class="modal-overlay"></div>
         <div class="modal-content">
           <div class="modal-header">
-            <h2>Settings</h2>
-            <button class="btn-icon" id="closeSettings">
-              <i class="fas fa-times"></i>
+            <h2 id="settingsModalTitle">Settings</h2>
+            <button class="btn-icon" id="closeSettings" aria-label="Close Settings">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path fill-rule="evenodd" d="M5.47 5.47a.75.75 0 0 1 1.06 0L12 10.94l5.47-5.47a.75.75 0 1 1 1.06 1.06L13.06 12l5.47 5.47a.75.75 0 1 1-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 0 1-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+              </svg>
             </button>
           </div>
           <div class="setting-item">
-            <label>Focus Duration (minutes)</label>
+            <label for="focusDuration">Focus Duration (minutes)</label>
             <input
               type="number"
               id="focusDuration"
@@ -77,7 +81,7 @@
             />
           </div>
           <div class="setting-item">
-            <label>Break Duration (minutes)</label>
+            <label for="breakDuration">Break Duration (minutes)</label>
             <input
               type="number"
               id="breakDuration"
@@ -91,7 +95,7 @@
       </div>
 
       <div class="timer-card">
-        <div class="timer-display">25:00</div>
+        <div class="timer-display" aria-live="polite">25:00</div>
         <div class="status">Time to focus</div>
         <div class="controls">
           <button class="btn" id="resetBtn">Reset</button>
@@ -115,6 +119,7 @@
         <div class="task-input">
           <form id="taskForm">
             <div class="input-group">
+              <label for="taskName" class="sr-only">Task Name</label>
               <input
                 type="text"
                 id="taskName"
@@ -129,12 +134,12 @@
         <div class="task-container">
           <div class="task-header">
             <h3>Current Task</h3>
-            <button id="toggleQueue" class="queue-toggle">Show Queue</button>
+            <button id="toggleQueue" class="queue-toggle" aria-expanded="false" aria-controls="taskQueue">Show Queue</button>
           </div>
           <div id="currentTask" class="current-task">
             <p id="currentTaskText">No task</p>
           </div>
-          <div id="taskQueue" class="task-queue">
+          <div id="taskQueue" class="task-queue" aria-hidden="true">
             <h4>Upcoming Tasks</h4>
             <ul id="taskList" class="task-list"></ul>
           </div>
@@ -142,7 +147,7 @@
       </div>
     </div>
 
-    <div class="notification" id="notification"></div>
-    <script src="script.js"></script>
+    <div class="notification" id="notification" role="alert"></div>
+    <script src="src/script.js"></script>
   </body>
 </html>
