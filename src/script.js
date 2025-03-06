@@ -27,6 +27,7 @@ class PomodoroTimer {
         this.currentTaskContainer = document.getElementById("currentTask");
         this.settings = this.loadSettings();
         this.timeLeft = this.settings.focusDuration * 60;
+        this.reminderTimeout = null;
 
         this.initializeEventListeners();
         this.loadTasks();
@@ -281,7 +282,7 @@ class PomodoroTimer {
             const taskItem = document.createElement("li");
             taskItem.classList.add("task-item");
             taskItem.dataset.id = task.id;
-            taskItem.draggable = true; 
+            taskItem.draggable = true;
             taskItem.innerHTML = `
         <span class="task-name" 
             contenteditable="true" 
@@ -397,6 +398,7 @@ class PomodoroTimer {
 
         if (this.mode === "focus") {
             const message = "Pomodoro completed! Great work!";
+            this.sendBrowserNotification("Focus Session Complete", message);
 
             if (this.currentFlowStreak) {
                 this.focusScore += 30;
@@ -412,6 +414,7 @@ class PomodoroTimer {
         } else {
             const message = "Break completed! Ready to focus?";
             this.showNotification(message);
+            this.sendBrowserNotification("Break Complete", message);
             this.mode = "focus";
             this.timeLeft = this.settings.focusDuration * 60;
             this.statusText.textContent = "Time to focus";
@@ -459,6 +462,7 @@ class PomodoroTimer {
         this.startBtn.textContent = "Pause";
         this.timerDisplay.classList.add("running");
         this.interval = setInterval(() => this.tick(), 1000);
+        this.setReminderNotifications();
     }
 
     pauseTimer() {
@@ -466,6 +470,10 @@ class PomodoroTimer {
         this.startBtn.textContent = "Resume";
         this.timerDisplay.classList.remove("running");
         clearInterval(this.interval);
+
+        if (this.reminderTimeout) {
+            clearTimeout(this.reminderTimeout);
+        }
 
         if (this.mode === "focus") {
             this.currentFlowStreak = false;
@@ -547,6 +555,60 @@ class PomodoroTimer {
         document.querySelector(
             ".stat-card:nth-child(2) .stat-value"
         ).textContent = this.tasksComplete;
+    }
+
+    initializeNotifications() {
+        if ("Notification" in window) {
+            if (Notification.permission !== "granted" && Notification.permission !== "denied") {
+                Notification.requestPermission();
+            }
+        }
+    }
+
+    sendBrowserNotification(title, message) {
+        if ("Notification" in window && Notification.permission === "granted") {
+            const notification = new Notification(title, {
+                body: message,
+                icon: "/favicon" 
+            });
+            setTimeout(() => notification.close(), 5000);
+            notification.onclick = () => {
+                window.focus();
+                notification.close();
+            };
+        }
+    }
+
+    setReminderNotifications() {
+        if (this.reminderTimeout) {
+            clearTimeout(this.reminderTimeout);
+        }
+
+        if (!this.isRunning) return;
+
+        const fifteenMinutesInSeconds = 15 * 60;
+        if (this.timeLeft > fifteenMinutesInSeconds) {
+            this.reminderTimeout = setTimeout(() => {
+                const mode = this.mode === "focus" ? "focus session" : "break";
+                this.sendBrowserNotification(
+                    "15 Minutes Remaining",
+                    `You have 15 minutes left in your current ${mode}.`
+                );
+                this.showNotification("15 minutes remaining!");
+            }, (this.timeLeft - fifteenMinutesInSeconds) * 1000);
+        }
+
+        const fiveMinuteInSeconds = 5 * 60;
+        if (this.timeLeft > fiveMinuteInSeconds) {
+            setTimeout(() => {
+                const mode = this.mode === "focus" ? "focus session" : "break";
+                this.sendBrowserNotification(
+                    "5 Minute Remaining",
+                    `You have 5 minute left in your current ${mode}.`
+                );
+                this.showNotification("5 minute remaining!");
+            }, (this.timeLeft - fiveMinuteInSeconds) * 1000);
+        }
     }
 
     showNotification(message) {
