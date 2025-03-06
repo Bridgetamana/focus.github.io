@@ -352,9 +352,17 @@ h1, h2, h3, h4 {
   display: block;
 }
 
-.task-name {
+.task-item .task-name {
+  cursor: text;
   flex: 1;
-  padding: 0.5rem 0;
+  padding: 0.5rem 1rem;
+}
+
+.task-item::before {
+  content: "≡";
+  position: absolute;
+  left: -5px;
+  color: var(--text-secondary);
 }
 
 .task-name:hover {
@@ -378,6 +386,8 @@ h1, h2, h3, h4 {
   display: flex;
   align-items: center;
   border-bottom: 1px solid var(--card-bg);
+  cursor: grab;
+  position: relative;
 }
 
 .notification {

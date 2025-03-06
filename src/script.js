@@ -34,6 +34,7 @@ class PomodoroTimer {
         this.initializeSettings();
         this.initializeHelp();
         this.initializeNotifications();
+        this.initializeDragAndDrop();
         this.updateDisplay();
         this.updateStats();
     }
@@ -49,12 +50,12 @@ class PomodoroTimer {
                 this.bestScore = this.focusScore;
                 localStorage.setItem("bestScore", this.bestScore.toString());
             }
-            
+
             this.focusScore = 0;
             this.lastResetDate = today;
             localStorage.setItem("lastResetDate", today);
             localStorage.setItem("focusScore", "0");
-            
+
             this.showNotification(
                 "New day started! Previous best: " + this.bestScore
             );
@@ -217,6 +218,59 @@ class PomodoroTimer {
         }
     }
 
+    initializeDragAndDrop() {
+        this.taskList.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('task-item')) {
+                e.dataTransfer.setData('text/plain', e.target.dataset.id);
+                e.target.classList.add('dragging');
+            }
+        });
+
+        this.taskList.addEventListener('dragend', (e) => {
+            if (e.target.classList.contains('task-item')) {
+                e.target.classList.remove('dragging');
+            }
+        });
+
+        this.taskList.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            const draggedItem = this.taskList.querySelector('.dragging');
+            if (!draggedItem) return;
+
+            const siblings = [...this.taskList.querySelectorAll('.task-item:not(.dragging)')];
+            const nextSibling = siblings.find(sibling => {
+                return e.clientY < sibling.getBoundingClientRect().top + sibling.getBoundingClientRect().height / 2;
+            });
+
+            this.taskList.insertBefore(draggedItem, nextSibling);
+        });
+
+        this.taskList.addEventListener('drop', (e) => {
+            e.preventDefault();
+            const draggedId = parseInt(e.dataTransfer.getData('text/plain'));
+
+            const newOrder = [...this.taskList.querySelectorAll('.task-item')].map(
+                item => parseInt(item.dataset.id)
+            );
+
+            const currentTask = this.currentTask ? [this.currentTask] : [];
+            const completedTasks = this.tasks.filter(task => task.completed);
+            const queuedTasksMap = {};
+
+            this.tasks
+                .filter(task => !task.completed && task.id !== this.currentTask?.id)
+                .forEach(task => {
+                    queuedTasksMap[task.id] = task;
+                });
+
+            const orderedQueuedTasks = newOrder.map(id => queuedTasksMap[id]);
+
+            this.tasks = [...currentTask, ...orderedQueuedTasks, ...completedTasks];
+            this.saveTasks();
+            this.showNotification("Task order updated!");
+        });
+    }
+
     renderTasks() {
         this.taskList.innerHTML = "";
         const queuedTasks = this.tasks.filter(
@@ -227,22 +281,54 @@ class PomodoroTimer {
             const taskItem = document.createElement("li");
             taskItem.classList.add("task-item");
             taskItem.dataset.id = task.id;
+            taskItem.draggable = true; 
             taskItem.innerHTML = `
-            <span class="task-name" 
-                contenteditable="true" 
-                data-task-id="${task.id}">${task.name}</span>
-                <div class="task-actions">
-                    <button class="delete-btn" onclick="window.pomodoroTimer.deleteTask(${task.id})">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-            </span>
-            `;
+        <span class="task-name" 
+            contenteditable="true" 
+            data-task-id="${task.id}">${task.name}</span>
+            <div class="task-actions">
+                <button class="delete-btn" onclick="window.pomodoroTimer.deleteTask(${task.id})">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+        </span>
+      `;
 
             const taskName = taskItem.querySelector(".task-name");
             this.initializeEditableTask(taskName);
 
             this.taskList.appendChild(taskItem);
+        });
+    }
+
+    initializeEditableTask(element) {
+        element.addEventListener("blur", () => {
+            const taskId = parseInt(element.dataset.taskId);
+            const newName = element.textContent.trim();
+            if (newName && newName !== this.currentTask?.name) {
+                this.updateTaskName(taskId, newName);
+            }
+        });
+
+        element.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                element.blur();
+            }
+        });
+
+        element.addEventListener("focus", () => {
+            const taskItem = element.closest('.task-item');
+            if (taskItem) {
+                taskItem.draggable = false;
+            }
+        });
+
+        element.addEventListener("blur", () => {
+            const taskItem = element.closest('.task-item');
+            if (taskItem) {
+                taskItem.draggable = true;
+            }
         });
     }
 
