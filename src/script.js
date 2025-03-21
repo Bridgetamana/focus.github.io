@@ -90,6 +90,9 @@ class PomodoroTimer {
         const saveSettings = document.getElementById("saveSettings");
 
         settingsBtn.addEventListener("click", () => {
+            const savedSettings = this.loadSettings();
+            document.getElementById("focusDuration").value = savedSettings.focusDuration;
+            document.getElementById("breakDuration").value = savedSettings.breakDuration;
             settingsModal.classList.add("show");
         });
 
@@ -113,11 +116,6 @@ class PomodoroTimer {
 
             if (focusDuration <= 0 || breakDuration <= 0) {
                 this.showNotification("Duration must be greater than 0");
-                return;
-            }
-
-            if (focusDuration > 60 || breakDuration > 30) {
-                this.showNotification("Duration exceeds maximum limit");
                 return;
             }
 
@@ -463,6 +461,7 @@ class PomodoroTimer {
         this.timerDisplay.classList.add("running");
         this.interval = setInterval(() => this.tick(), 1000);
         this.setReminderNotifications();
+        this.updateDocumentTitle();
     }
 
     pauseTimer() {
@@ -500,6 +499,7 @@ class PomodoroTimer {
     tick() {
         this.timeLeft--;
         this.updateDisplay();
+        this.updateDocumentTitle();
         if (this.timeLeft <= 0) {
             this.completeSession();
         }
@@ -535,11 +535,24 @@ class PomodoroTimer {
     }
 
     updateDisplay() {
-        const minutes = Math.floor(this.timeLeft / 60);
+        const hours = Math.floor(this.timeLeft / 3600);
+        const minutes = Math.floor((this.timeLeft % 3600) / 60);
         const seconds = this.timeLeft % 60;
-        this.timerDisplay.textContent = `${minutes
-            .toString()
-            .padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        const formattedTime = hours > 0
+            ? `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+            : `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        this.timerDisplay.textContent = formattedTime;
+    }
+
+    updateDocumentTitle() {
+        const hours = Math.floor(this.timeLeft / 3600);
+        const minutes = Math.floor((this.timeLeft % 3600) / 60);
+        const seconds = this.timeLeft % 60;
+        const formattedTime = hours > 0
+            ? `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`
+            : `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+        this.timerDisplay.textContent = formattedTime;
+        document.title = `${formattedTime} - ${this.mode.charAt(0).toUpperCase() + this.mode.slice(1)} Mode`;
     }
 
     updateStats() {
